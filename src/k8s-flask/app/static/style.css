@@ -1,0 +1,192 @@
+/* static/style.css */
+
+/* General body styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5; /* Light gray background */
+    color: #333; /* Dark gray text */
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* White background for table */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Adjusted border color */
+    text-align: left;
+    padding: 8px; /* Adjusted padding */
+}
+
+th {
+    background-color: #f2f2f2; /* Adjusted header background color */
+    color: white;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Adjusted even row background color */
+}
+
+tr:hover {
+    background-color: #e9ecef; /* Light hover effect for rows */
+}
+
+/* Form container styles */
+.form-container {
+    margin: 30px auto; /* Added top margin */
+    max-width: 600px; /* Slightly wider form */
+    padding: 30px;
+    background-color: #ffffff; /* White background */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #343a40; /* Darker heading color */
+    font-weight: 500;
+}
+
+/* Form and help text layout */
+.form-with-help {
+    display: flex;
+    gap: 30px; /* Space between form and help text */
+}
+
+.form-inputs {
+    flex: 2; /* Form takes more space */
+}
+
+.help-text-container {
+    flex: 1; /* Help text takes less space */
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for help text */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.help-text-container h3 {
+    margin-top: 0;
+    color: #495057; /* Muted color for help heading */
+    font-size: 1.1em;
+    border-bottom: 1px solid #ced4da;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.help-text-container p {
+    font-size: 0.9em;
+    color: #6c757d; /* Softer text color for help */
+    line-height: 1.5;
+}
+
+.help-text-container .example {
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Increased margin */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px; /* Increased space below label */
+    font-weight: 500; /* Slightly bolder labels */
+    color: #495057;
+}
+
+.form-group input {
+    width: calc(100% - 24px); /* Adjusted width for padding */
+    padding: 12px;
+    border: 1px solid #ced4da; /* Softer border color */
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #007bff; /* Blue border on focus */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Blue shadow on focus */
+}
+
+/* Submit button styles */
+.submit-button {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #007bff; /* Primary blue */
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Delete button for table */
+input[type="submit"][value="Delete Selected"] {
+    background-color: #dc3545; /* Red for delete */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-top: 10px; /* Space above delete button */
+}
+
+input[type="submit"][value="Delete Selected"]:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #e0e0e0; /* Lighter horizontal rule */
+    margin: 40px 0; /* More space around hr */
+}
+
+/* Add styles for the new layout */
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Adjust columns to make left column wider using flex-basis and min-width */
+.left-column {
+    flex: 1 1 40%; /* flex-grow: 1, flex-shrink: 1, flex-basis: 60% */
+    min-width: 0; /* Allow column to shrink below content's intrinsic min-width */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-column {
+    flex: 1 1 60%; /* flex-grow: 1, flex-shrink: 1, flex-basis: 40% */
+    min-width: 0; /* Allow column to shrink below content's intrinsic min-width */
+}
+
+.table-container {
+    overflow-x: auto; /* Ensure the table can scroll horizontally */
+    white-space: nowrap; /* Prevent table cells from wrapping */
+}

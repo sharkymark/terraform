@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Commission Calculator</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}?v={{ cache_bust }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="main-container">
+    <div class="left-column">
+        <div class="form-container">
+            <h2>Enter Commission Details (Quarterly)</h2>
+            <div class="form-with-help">
+                <div class="form-inputs">
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="quota">Quota:</label>
+                            <input type="number" step="any" name="quota" id="quota" value="250000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="variable_comp">Variable Compensation Portion (Quarterly Target):</label>
+                            <input type="number" step="any" name="variable_comp" id="variable_comp" value="35000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="deal_revenue">Total Deal Revenue (for the quarter):</label>
+                            <input type="number" step="any" name="deal_revenue" id="deal_revenue" value="" required>
+                        </div>
+                        <input type="submit" value="Calculate" class="submit-button">
+                    </form>
+                </div>
+                <div class="help-text-container">
+                    <h3>How Commission is Calculated</h3>
+                    <p>The commission rate is calculated as:</p>
+                    <p><code>Rate = Variable Compensation / Quota</code></p>
+                    <p>The commission amount is then:</p>
+                    <p><code>Commission = Rate * Deal Revenue</code></p>
+                    <hr style="margin: 15px 0; border-color: #ced4da;">
+                    <h4>Example:</h4>
+                    <div class="example">
+                        <p>If your <strong>Quota</strong> is $250,000, your <strong>Variable Compensation</strong> is $35,000, and you close $300,000 in <strong>Deal Revenue</strong>:</p>
+                        <p>1. Rate = $35,000 / $250,000 = 0.14 (14%)</p>
+                        <p>2. Commission = 0.14 * $300,000 = $42,000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-column">
+        <h2>Commission Records</h2>
+        <form action="/delete-row" method="post">
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Action</th>
+                        <th>Created At</th>  
+                        <th>Commission</th>   
+                        <th>Deal Revenue</th>                   
+                        <th>Variable Comp</th>
+                        <th>Variable Rate</th>                               
+                        <th>Quota Attainment</th>
+                        <th>Quota</th>   
+
+                    </tr>
+                    {% for commission in commissions | reverse %}
+                    <tr>
+                        <td><input type="checkbox" name="commission_ids" value="{{ commission.id }}"></td>
+                        <td class="local-datetime" data-utc-timestamp="{{ commission.created_at.isoformat() }}Z"></td>
+                        <td>{{ '%.2f'|format(commission.commission_amt) }}</td>
+                        <td>{{ commission.deal_revenue }}</td>
+                        <td>{{ commission.variable_comp }}</td>
+                        <td>{{ '%.2f'|format(commission.variable_rate * 100) }}%</td>
+                        <td>{{ commission.attainment }}%</td>
+                        <td>{{ commission.quota }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <input type="submit" value="Delete Selected">
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.local-datetime').forEach(function(td) {
+        const utcTimestamp = td.getAttribute('data-utc-timestamp');
+        if (utcTimestamp) {
+            const date = new Date(utcTimestamp);
+            
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2); // Add 1 because getMonth() is 0-indexed
+            const day = ('0' + date.getDate()).slice(-2);
+            
+            let hours = date.getHours();
+            const minutes = ('0' + date.getMinutes()).slice(-2);
+            
+            const ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            const strHours = hours; // Not zero-padding for hours like 9am, but 10am
+            
+            td.textContent = `${year}-${month}-${day} ${strHours}:${minutes}${ampm}`;
+        }
+    });
+});
+</script>
+
+</body>
+</html>
